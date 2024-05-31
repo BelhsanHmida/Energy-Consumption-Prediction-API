@@ -1,33 +1,29 @@
+# .github/workflows/ci.yml
 name: CI
 
-on:
-  push:
-    branches:
-      - main  # Define which branches trigger this workflow
+on: [push, pull_request]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest  # Specify the operating system for the job
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2  # Action to checkout your repository
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2  # Action to set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
 
-        with:
-          python-version: 3.9  # Define your Python version
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Install your project dependencies
-
-      - name: Run tests
-        run: |
-          pytest  # Command to run your tests
-
-      - name: Lint code
-        run: |
-          pylint src  # Command to lint your code
+    - name: Run tests
+      run: |
+        source venv/bin/activate
+        pytest
