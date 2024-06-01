@@ -75,11 +75,16 @@ energy-consumption-prediction-api/
     mkdir -p models
     # Place your xgboost_energy_model.pkl in the models directory
     ```
-
-5. **Run the Flask application:**
-    ```bash
-    python app.py
+5. **Run Tests:**
+     ```bash
+    pytest 
     ```
+6. **Run the Flask application:**
+   ```bash
+    python src/app.py
+    ```
+
+    
 
 ## Usage
 
