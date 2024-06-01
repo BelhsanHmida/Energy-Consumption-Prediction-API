@@ -1,3 +1,27 @@
+"""
+Unit tests for the Energy Consumption Prediction API.
+
+These tests use pytest to validate the behavior of the API endpoints:
+- /: Tests the index route.
+- /predict: Tests the predict route with various date inputs.
+
+Tests:
+- test_index: Checks if the index route returns a 200 status code and the correct welcome message.
+- test_predict_valid_date: Tests the predict route with a valid date.
+- test_predict_invalid_date_format: Tests the predict route with various invalid date formats.
+- test_predict_missing_date: Tests the predict route with a missing date parameter.
+- test_predict_past_date: Tests the predict route with a past date.
+- test_predict_valid_date_edge_case: Tests the predict route with the edge case of the earliest valid date.
+
+Usage:
+    To run these tests, use pytest:
+
+    $ pytest test_app.py
+
+Requirements:
+    - pytest
+    - Flask (included in the project dependencies)
+"""
 import pytest
 from app import app
 
