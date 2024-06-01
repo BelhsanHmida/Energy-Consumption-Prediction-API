@@ -5,6 +5,7 @@ Welcome to the Energy Consumption Prediction API, an open-source project designe
 ## Table of Contents
 
 - [Overview](#overview)
+- [Directory Structure](#Directory-Structure)
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
