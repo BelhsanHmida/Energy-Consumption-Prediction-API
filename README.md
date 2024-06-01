@@ -18,8 +18,8 @@ Welcome to the Energy Consumption Prediction API, an open-source project designe
 This project provides an API for predicting energy consumption using a pre-trained XGBoost model. The API accepts a date in the format `YYYY-MM-DDTHH:MM:SS` and returns a prediction of energy consumption for that date and time.
 
 ## Directory Structure
-'''
-energy-consumption-prediction-api/
+
+'''energy-consumption-prediction-api/
     ├── app.py
     ├── models/
     │   └── xgboost_energy_model.pkl
@@ -29,8 +29,8 @@ energy-consumption-prediction-api/
     │   └── README.md
     ├── requirements.txt
     ├── README.md
-    └── CONTRIBUTING.md
-'''
+    └── CONTRIBUTING.md'''
+
 
 
 
