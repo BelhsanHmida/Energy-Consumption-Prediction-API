@@ -1,9 +1,8 @@
 
-### Improvements Folder Structure
+### Future Improvements 
 
-Create a new directory called `improvements` in your project and add a file named `README.md` with the suggested improvements and instructions on how to contribute.
-
-```markdown
+ 
+ 
 # Improvements
 
 This folder contains suggestions and plans for improving the Energy Consumption Prediction API. Contributions are welcome!
@@ -18,6 +17,6 @@ This folder contains suggestions and plans for improving the Energy Consumption 
 
 ### API Enhancements
 
-- **Edge Case Handling:** Improve the handling of edge cases, such as very long forecast windows. Investigate the impact of forecasting several days or weeks into the future and implement measures to ensure accuracy.
-- **Error Handling:** Enhance error handling to provide more informative messages for various failure scenarios.
+- **More Edge Case Handling:** Improve the handling of edge cases, such as very long forecast windows. Investigate the impact of forecasting several days or weeks into the future and implement measures to ensure accuracy.
+- **More Error Handling:** Enhance error handling to provide more informative messages for various failure scenarios.
 - **Scalability:** Implement techniques to improve the scalability of the API, such as caching, load balancing, and database optimizations.
