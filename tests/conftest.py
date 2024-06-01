@@ -17,11 +17,6 @@ from app import app  # Ensure this imports your Flask app correctly
 import pytest
 
 
-
-
-
-
-
 @pytest.fixture
 def client():
     """
