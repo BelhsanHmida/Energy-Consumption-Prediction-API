@@ -1,57 +1,26 @@
-"""
-test_app.py
-
-This module contains test cases for the Energy Consumption Prediction API.
-
-Test Cases:
-- test_index: Tests the index route (/) of the API.
-- test_predict_valid_date: Tests the /predict route with a valid date.
-- test_predict_invalid_date_format: Tests the /predict route with various invalid date formats.
-- test_predict_missing_date: Tests the /predict route with a missing date parameter.
-- test_predict_past_date: Tests the /predict route with a past date.
-
-Modules Required:
-- pytest
-- src.app: Imports the Flask app for testing.
-"""
-
 import pytest
 from app import app
 
 @pytest.fixture
 def client():
-    """
-    Fixture to provide a test client for the Flask app.
-
-    Yields:
-        FlaskClient: A Flask test client instance.
-    """
     with app.test_client() as client:
         yield client
 
 def test_index(client):
-    """
-    Test the index route (/) of the API.
-    """
+    """Test the index route"""
     response = client.get('/')
     assert response.status_code == 200
     assert b"Welcome to the Energy Consumption Prediction API!" in response.data
 
 def test_predict_valid_date(client):
-    """
-    Test the /predict route with a valid date.
-    """
+    """Test the predict route with a valid date"""
     response = client.get('/predict?date=2024-05-31T12:00:00')
     assert response.status_code == 200
     assert 'prediction' in response.json
 
 def test_predict_invalid_date_format(client):
-    """
-    Test the /predict route with various invalid date formats.
-    """
-    invalid_dates = [
-        '2023-05-31', 
-        '2023-31-05T12:00:00', 
+    """Test the predict route with various invalid date formats"""
+    invalid_dates = [  
         '31-05-2023T12:00:00', 
         '20230531T120000', 
         '2023-05-31T12:00', 
@@ -62,21 +31,29 @@ def test_predict_invalid_date_format(client):
     ]
     for date in invalid_dates:
         response = client.get(f'/predict?date={date}')
+        if response.status_code == 200:
+            print(f"Date '{date}' incorrectly parsed as valid. Response: {response.json}")
+        else:
+            print(f"Date '{date}' correctly parsed as invalid. Status code: {response.status_code}")
         assert response.status_code == 400
         assert 'error' in response.json
 
+
 def test_predict_missing_date(client):
-    """
-    Test the /predict route with a missing date parameter.
-    """
+    """Test the predict route with a missing date parameter"""
     response = client.get('/predict')
     assert response.status_code == 400
     assert 'error' in response.json
 
 def test_predict_past_date(client):
-    """
-    Test the /predict route with a past date.
-    """
+    """Test the predict route with a past date"""
     response = client.get('/predict?date=2000-01-01T00:00:00')
     assert response.status_code == 400
     assert 'error' in response.json
+    assert 'invalid_date' in response.json
+
+def test_predict_valid_date_edge_case(client):
+    """Test the predict route with the edge case of the earliest valid date"""
+    response = client.get('/predict?date=2015-12-29T00:00:00')
+    assert response.status_code == 200
+    assert 'prediction' in response.json

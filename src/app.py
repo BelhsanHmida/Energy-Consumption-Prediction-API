@@ -7,6 +7,13 @@ Endpoints:
 - /predict: Predicts energy consumption based on the input date.
 - /: Welcome route for the API.
 
+Modules Required:
+- pickle
+- pandas
+- Flask, request, jsonify
+- Flask-Marshmallow
+- datetime
+- os
 """
 
 import pickle
@@ -25,15 +32,11 @@ with open(r'models/xgboost_energy_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
 # Define the schema for input validation
-
-
 class PredictionSchema(ma.Schema):
     class Meta:
         fields = ('date',)
 
-
 prediction_schema = PredictionSchema()
-
 
 @app.route('/predict', methods=['GET'])
 def predict():
@@ -52,24 +55,22 @@ def predict():
             return jsonify({'error': 'Missing date parameter.'}), 400
 
         try:
-            date = pd.to_datetime(date_str, format='%Y-%m-%dT%H:%M:%S')
+            date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S')
         except ValueError:
-            return jsonify(
-                {'error': 'Invalid date format. Please use YYYY-MM-DDTHH:MM:SS format.'}), 400
+            return jsonify({'error': 'Invalid date format. Please use YYYY-MM-DDTHH:MM:SS format.'}), 400
 
         # Check if the date is within the valid range
-        training_start_date = pd.to_datetime('2015-12-29')
+        training_start_date = datetime.strptime('2015-12-29', '%Y-%m-%d')
         if date < training_start_date:
-            return jsonify(
-                {'error': f'Date must be on or after {training_start_date.strftime("%Y-%m-%d")}.', 'invalid_date': date_str}), 400
+            return jsonify({'error': f'Date must be on or after {training_start_date.strftime("%Y-%m-%d")}.', 'invalid_date': date_str}), 400
 
         # Extract features from the date
         hour = date.hour
-        dayofweek = date.dayofweek
+        dayofweek = date.weekday()
         quarter = (date.month - 1) // 3 + 1  # Calculate the quarter
         month = date.month
         year = date.year
-        dayofyear = date.dayofyear
+        dayofyear = date.timetuple().tm_yday
         dayofmonth = date.day
         weekofyear = date.isocalendar()[1]
 
@@ -100,14 +101,12 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-
 @app.route('/')
 def index():
     """
     Welcome route for the Energy Consumption Prediction API.
     """
     return "Welcome to the Energy Consumption Prediction API!"
-
 
 # Main block to start the Flask application
 if __name__ == '__main__':
