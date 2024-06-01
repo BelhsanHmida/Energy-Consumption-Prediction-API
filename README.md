@@ -30,7 +30,8 @@ energy-consumption-prediction-api/
   │   └── README.md
   ├── requirements.txt
   ├── README.md
-  └── CONTRIBUTING.md'''python
+  └── CONTRIBUTING.md
+'''python
   
 
 
