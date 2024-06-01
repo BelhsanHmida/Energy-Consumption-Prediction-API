@@ -70,16 +70,11 @@ energy-consumption-prediction-api/
     pip install -r requirements.txt
     ```
 
-4. **Make sure the pre-trained model is available in the `models` directory:**
-    ```bash
-    mkdir -p models
-    # Place your xgboost_energy_model.pkl in the models directory
-    ```
-5. **Run Tests:**
+4. **Run Tests:**
      ```bash
     pytest 
     ```
-6. **Run the Flask application:**
+5. **Run the Flask application:**
    ```bash
     python src/app.py
     ```
