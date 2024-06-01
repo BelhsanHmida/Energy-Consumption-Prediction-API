@@ -1,9 +1,4 @@
-
-### Future Improvements 
-
- 
- 
-# Improvements
+# Future Improvements
 
 This folder contains suggestions and plans for improving the Energy Consumption Prediction API. Contributions are welcome!
 
