@@ -7,15 +7,16 @@ Fixtures:
 - client: Provides a test client for the Flask app.
 """
 
-
 import os
 import sys
 
-# Add the project root directory to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+sys.path.insert(0,os.path.abspath(
+        os.path.join(os.path.dirname(__file__),'../src')) )# Add the project root directory to the Python path
 
-import pytest
 from app import app  # Ensure this imports your Flask app correctly
+import pytest
+
+
 
 
 

@@ -19,13 +19,16 @@ This project provides an API for predicting energy consumption using a pre-train
 
 ## Directory Structure
 
-```python
+
+```plaintext
 energy-consumption-prediction-api/
   ├── app.py
+  ├── data_ingestion.py
   ├── models/
   │   └── xgboost_energy_model.pkl
   ├── tests/
   │   └── test_app.py
+  ├── utils.py
   ├── improvements/
   │   └── README.md
   ├── requirements.txt

@@ -9,7 +9,12 @@ The primary functions provided in this module are `train_xgb_model` and `save_xg
 
 Example usage:
     >>> from model_training import train_xgb_model, save_xgb_model
-    >>> X_train, y_train, X_test, y_test = create_features(train_data, val_data, label='y')
+    >>> from data_ingestion import load_data, preprocess_data
+    >>> from utils import create_features
+    >>> data = load_data('data/SF_hospital_load.csv')
+    >>> data = preprocess_data(data)
+    >>> X, y = create_features(data, label='load')
+    >>> X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
     >>> model = train_xgb_model(X_train, y_train, X_test, y_test, feature_names=['hour', 'dayofweek'])
     >>> save_xgb_model(model, 'models/energy_forecast_xgb_model.pkl')
 """
@@ -17,8 +22,9 @@ Example usage:
 import pickle
 import xgboost as xgb
 import pandas as pd
-ssssssssssssss = ssssssssss, ssssssssssssssssss, sssssssssssssssssssssss, sssssssssssssssssssssssss, ssssssssssssssssssssssss
-
+from sklearn.model_selection import train_test_split
+from utils import create_features
+from data_ingestion import load_data, preprocess_data
 
 def train_xgb_model(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame,
                     y_test: pd.Series, feature_names: list) -> xgb.XGBRegressor:
@@ -64,3 +70,22 @@ def save_xgb_model(model: xgb.XGBRegressor, file_path: str) -> None:
     """
     with open(file_path, 'wb') as f:
         pickle.dump(model, f)
+
+if __name__ == "__main__":
+    # Load and preprocess the data
+    data = load_data("data/SF_hospital_load.csv")
+    data = preprocess_data(data)
+
+    # Create features and target variable
+    X, y = create_features(data, label='load')
+
+    # Split the data into training and validation sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+    # Train the XGBoost model
+    model = train_xgb_model(X_train, y_train, X_test, y_test, feature_names=['hour', 'dayofweek'])
+
+    # Save the model
+    save_xgb_model(model, 'models/xgboost_energy_model.pkl')
+
+    print("Model training and saving completed successfully.")
