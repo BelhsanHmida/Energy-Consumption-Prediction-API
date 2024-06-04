@@ -13,14 +13,6 @@ Tests:
 - test_predict_past_date: Tests the predict route with a past date.
 - test_predict_valid_date_edge_case: Tests the predict route with the edge case of the earliest valid date.
 
-Usage:
-    To run these tests, use pytest:
-
-    $ pytest test_app.py
-
-Requirements:
-    - pytest
-    - Flask (included in the project dependencies)
 """
 import pytest
 from app import app
