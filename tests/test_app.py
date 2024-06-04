@@ -41,7 +41,7 @@ def test_index(client):
 
 def test_predict_valid_date(client):
     """Test the predict route with a valid date"""
-    response = client.get('/predict?date=2024-07-31T12:00:00')
+    response = client.get('/predict?date=2023-07-31T12:00:00')
     assert response.status_code == 200
     assert 'prediction' in response.json
 
