@@ -7,13 +7,7 @@ Endpoints:
 - /predict: Predicts energy consumption based on the input date.
 - /: Welcome route for the API.
 
-Modules Required:
-- pickle
-- pandas
-- Flask, request, jsonify
-- Flask-Marshmallow
-- datetime
-- os
+
 """
 
 import pickle
