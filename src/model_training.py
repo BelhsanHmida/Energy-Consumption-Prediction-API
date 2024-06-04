@@ -1,6 +1,4 @@
 """
-model_training.py
-
 This module contains functions for training an XGBoost forecasting model and saving it to a file.
 
 The primary functions provided in this module are `train_xgb_model` and `save_xgb_model`.
@@ -24,7 +22,8 @@ import xgboost as xgb
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from utils import create_features
-from data_ingestion import load_data, preprocess_data
+from data_ingestion import load_data
+
 
 def train_xgb_model(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame,
                     y_test: pd.Series, feature_names: list) -> xgb.XGBRegressor:
@@ -56,7 +55,6 @@ def train_xgb_model(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFr
 
     return model
 
-
 def save_xgb_model(model: xgb.XGBRegressor, file_path: str) -> None:
     """
     Saves the trained XGBoost model to a specified file path.
@@ -72,20 +70,21 @@ def save_xgb_model(model: xgb.XGBRegressor, file_path: str) -> None:
         pickle.dump(model, f)
 
 if __name__ == "__main__":
-    # Load and preprocess the data
+    # Load the data
     data = load_data("data/SF_hospital_load.csv")
-    data = preprocess_data(data)
 
     # Create features and target variable
-    X, y = create_features(data, label='load')
+    X, y = create_features(data, label='y')
 
     # Split the data into training and validation sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
 
     # Train the XGBoost model
-    model = train_xgb_model(X_train, y_train, X_test, y_test, feature_names=['hour', 'dayofweek'])
+    model = train_xgb_model(X_train, y_train, X_test, y_test, feature_names=['hour',
+                                                                             'dayofweek','quarter','month','year',
+                                                                             'dayofyear','dayofmonth','weekofyear'])
 
     # Save the model
-    save_xgb_model(model, 'models/xgboost_energy_model.pkl')
+    save_xgb_model(model, 'models/xgboost_energy_model01.pkl')
 
     print("Model training and saving completed successfully.")
